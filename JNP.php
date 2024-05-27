@@ -152,4 +152,23 @@ class JNP
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
     
+    public static function mask_CPF_CNPJ($formName, $name){
+        
+        TScript::create("
+        
+            var options = {
+        		onKeyPress : function(cpfcnpj, e, field, options) {
+        			var masks = ['000.000.000-000', '00.000.000/0000-00'];
+        			var mask = (cpfcnpj.length > 14) ? masks[1] : masks[0];
+        			$('form[name=\"$formName\"] [name=\"$name\"]').mask(mask, options);
+        		}
+        	};
+        
+        	$('form[name=\"$formName\"] [name=\"$name\"]').mask('000.000.000-000', options);
+
+        
+        ");
+        
+    }
+    
 }
